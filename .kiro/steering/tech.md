@@ -2,13 +2,13 @@
 
 ## Architecture
 
-Windows環境でのクライアントアプリ + SQL Server データベース。競技課題に応じてローカルDB・デスクトップUIを組み合わせる構成を基本とし、追加サービス連携は原則オフライン前提で代替。
+Windows環境のクライアントアプリ + SQL Server データベース。クリーンアーキテクチャ/DDDを採用し、依存方向は `UI(Presentation) -> Application -> Domain` で内向き、Infrastructure は Domain に依存するが逆方向は禁止。競技課題に応じてローカルDBとWinFormsベースのデスクトップUIを組み合わせ、追加サービス連携は原則オフラインで代替。
 
 ## Core Technologies
 
-- **Language**: C#（.NET デスクトップ開発想定）、T-SQL
-- **Framework**: .NET（WinForms/WPFいずれか課題指定に追従）
-- **Runtime**: .NET 6+（Visual Studio 2022標準を採用）
+- **Language**: C#（.NET デスクトップ開発）、T-SQL
+- **Framework**: .NET 9 / WinForms（課題指定に追従）
+- **Runtime**: .NET 9（Visual Studio 2022 17.12 同梱ランタイムを基準）
 
 ## Key Libraries
 
@@ -45,7 +45,8 @@ dotnet test
 
 - AI-DLC/Kiroによるフェーズ管理を前提に、仕様合意後に実装着手。
 - Windows/.NET + SQL Server のローカル開発を標準とし、外部SaaS依存は避ける。
-- デスクトップUIとDBの結合はDTO/リポジトリ層を介した疎結合を推奨。
+- WinForms UIとDBの結合はDTO/リポジトリ層を介した疎結合を推奨。
+- クリーンアーキテクチャ/DDDの依存方向を遵守し、UI・InfrastructureからDomainへの一方向依存を維持する。
 
 ---
 _Document standards and patterns, not every dependency_
